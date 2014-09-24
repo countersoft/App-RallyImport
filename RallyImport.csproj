@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2A9EFDF3-01E4-4ED0-A83C-924B6EC7C2AA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RallyImport</RootNamespace>
+    <AssemblyName>RallyImport</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Countersoft.Foundation.Commons">
+      <HintPath>libs\Countersoft.Foundation.Commons.dll</HintPath>
+    </Reference>
+    <Reference Include="Countersoft.Foundation.Contracts">
+      <HintPath>libs\Countersoft.Foundation.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Countersoft.Foundation.Utility">
+      <HintPath>libs\Countersoft.Foundation.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="Countersoft.Gemini">
+      <HintPath>libs\Countersoft.Gemini.dll</HintPath>
+    </Reference>
+    <Reference Include="Countersoft.Gemini.Commons">
+      <HintPath>libs\Countersoft.Gemini.Commons.dll</HintPath>
+    </Reference>
+    <Reference Include="Countersoft.Gemini.Contracts">
+      <HintPath>libs\Countersoft.Gemini.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Countersoft.Gemini.Extensibility">
+      <HintPath>libs\Countersoft.Gemini.Extensibility.dll</HintPath>
+    </Reference>
+    <Reference Include="Rally.RestApi">
+      <HintPath>libs\Rally.RestApi.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constants.cs" />
+    <Compile Include="Import.cs" />
+    <Compile Include="Models.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="RallyImport.css" />
+    <Content Include="RallyImport.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.manifest" />
+    <None Include="views\Status.cshtml" />
+    <None Include="views\Mappings.cshtml" />
+    <None Include="views\Credentials.cshtml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>del $(ProjectDir)$(TargetName).dll 2&amp;gt;null 1&amp;gt;null
+copy $(TargetDir)$(TargetName).dll $(ProjectDir)$(TargetName).dll
+
+del $(ProjectDir)$(TargetName).pdb
+copy $(TargetDir)$(TargetName).pdb $(ProjectDir)$(TargetName).pdb
+
+del $(ProjectDir)$(TargetName).zip
+$(ProjectDir)libs\7za.exe a $(TargetDir)$(TargetName).zip $(ProjectDir)*.dll $(ProjectDir)*.pdb $(ProjectDir)*.manifest $(ProjectDir)views $(ProjectDir)*.css $(ProjectDir)*.js
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
